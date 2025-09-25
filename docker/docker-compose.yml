@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+prover:
+build:
+context: .
+dockerfile: Dockerfile.prover
+ports:
+- "8080:8080"
+volumes:
+- ./circuits:/app/circuits:ro
+- ./prover-data:/app/data

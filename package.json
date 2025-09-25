@@ -1,0 +1,16 @@
+{
+  "name": "fermah-starter-kit",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "SDK",
+    "CLI",
+    "frontend",
+    "contracts",
+    "prover-server"
+  ],
+  "scripts": {
+    "build": "yarn workspaces run build",
+    "dev": "yarn workspace frontend dev"
+  }
+}

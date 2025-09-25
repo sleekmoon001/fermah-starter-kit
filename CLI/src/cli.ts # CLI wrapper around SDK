@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import { LocalTransport, FermahTransport, FermahSDK } from '../../SDK/src/index';
+
+
+const argv = yargs(hideBin(process.argv))
+.command('submit', 'Submit a circuit', (y) => y
+.option('circuit', {type:'string', demandOption:true})
+.option('inputs', {type:'string', demandOption:true})
+.option('local', {type:'boolean', default:true})
+)
+.command('status', 'Get job status', (y) => y.option('job', {type:'string', demandOption:true}))
+.help()
+.argv;
+
+
+(async () => {
+const cmd = argv._[0];
+if (cmd === 'submit') {
+const circuit = argv.circuit as string;
+const inputs = JSON.parse(argv.inputs as string);
+const transport = new LocalTransport('http://localhost:8080');
+const sdk = new FermahSDK(transport);
+const jobId = await sdk.submit(circuit, inputs, 'groth16');
+console.log('jobId:', jobId);
+} else if (cmd === 'status') {
+const transport = new LocalTransport('http://localhost:8080');
+const sdk = new FermahSDK(transport);
+const job = await sdk.status(argv.job as string);
+console.log(job);
+} else {
+console.log('unknown command');
+}
+})();

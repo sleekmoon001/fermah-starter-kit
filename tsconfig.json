@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    /* Output */
+    "outDir": "dist",
+    "rootDir": ".",
+
+    /* Language and libraries */
+    "target": "es2019",
+    "module": "commonjs",
+    "lib": ["es2019", "dom"],
+
+    /* Module resolution */
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+
+    /* Strictness */
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Declarations */
+    "declaration": true,
+    "declarationMap": true,
+
+    /* Source maps */
+    "sourceMap": true
+  },
+  "include": [
+    "SDK/src",
+    "CLI/src",
+    "frontend",
+    "contracts",
+    "circuits",
+    "docs"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    ".next",
+    "prover-server"
+  ]
+}
+
