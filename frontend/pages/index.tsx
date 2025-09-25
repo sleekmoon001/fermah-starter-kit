@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
 export default function Home() {
-  const [inputA, setInputA] = useState<number>(1);
-  const [inputB, setInputB] = useState<number>(2);
   const [result, setResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -17,7 +15,7 @@ export default function Home() {
       const res = await fetch(proverUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: { a: inputA, b: inputB } }),
+        body: JSON.stringify({ input: { a: 1, b: 2 } }),
       });
 
       if (!res.ok) throw new Error(`Server error: ${res.status}`);
@@ -35,32 +33,13 @@ export default function Home() {
   return (
     <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
       <h1>Fermah Starter Kit 🚀</h1>
-
-      <div style={{ marginBottom: "1rem" }}>
-        <label>
-          a:{" "}
-          <input
-            type="number"
-            value={inputA}
-            onChange={(e) => setInputA(Number(e.target.value))}
-            style={{ marginRight: "1rem" }}
-          />
-        </label>
-        <label>
-          b:{" "}
-          <input
-            type="number"
-            value={inputB}
-            onChange={(e) => setInputB(Number(e.target.value))}
-          />
-        </label>
-      </div>
-
+      <p>Click below to generate a proof:</p>
       <button
         onClick={handleGenerateProof}
         disabled={loading}
         style={{
           padding: "0.5rem 1rem",
+          marginTop: "1rem",
           background: "#0070f3",
           color: "#fff",
           border: "none",
