@@ -9,15 +9,16 @@ export default function Home() {
     setResult("");
 
     try {
-      const res = await fetch(process.env.NEXT_PUBLIC_PROVER_URL!, {
+      const proverUrl = process.env.NEXT_PUBLIC_PROVER_URL;
+      if (!proverUrl) throw new Error("Backend URL not set");
+
+      const res = await fetch(proverUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input: { a: 1, b: 2 } }),
       });
 
-      if (!res.ok) {
-        throw new Error(`Server error: ${res.status}`);
-      }
+      if (!res.ok) throw new Error(`Server error: ${res.status}`);
 
       const data = await res.json();
       setResult(JSON.stringify(data, null, 2));
