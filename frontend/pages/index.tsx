@@ -6,7 +6,7 @@ export default function Home() {
 
   async function handleGenerateProof() {
     try {
-      const res = await fetch("https://fermah-prover.onrender.com/", {
+      const res = await fetch("https://fermah-prover.onrender.com/prove", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input: { a: 1, b: 2 } }),
