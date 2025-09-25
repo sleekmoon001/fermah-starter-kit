@@ -2,10 +2,14 @@ import React, { useState } from "react";
 
 export default function Home() {
   const [result, setResult] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   async function handleGenerateProof() {
+    setLoading(true);
+    setResult("");
+
     try {
-      const res = await fetch("https://fermah-prover.onrender.com/prove", {
+      const res = await fetch(process.env.NEXT_PUBLIC_PROVER_URL!, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input: { a: 1, b: 2 } }),
@@ -20,6 +24,8 @@ export default function Home() {
     } catch (err) {
       console.error(err);
       setResult("❌ Error calling prover-server");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -29,6 +35,7 @@ export default function Home() {
       <p>Click below to generate a proof:</p>
       <button
         onClick={handleGenerateProof}
+        disabled={loading}
         style={{
           padding: "0.5rem 1rem",
           marginTop: "1rem",
@@ -36,10 +43,10 @@ export default function Home() {
           color: "#fff",
           border: "none",
           borderRadius: "5px",
-          cursor: "pointer",
+          cursor: loading ? "not-allowed" : "pointer",
         }}
       >
-        Generate Proof
+        {loading ? "Generating..." : "Generate Proof"}
       </button>
 
       {result && (
@@ -49,6 +56,8 @@ export default function Home() {
             padding: "1rem",
             background: "#f4f4f4",
             borderRadius: "5px",
+            whiteSpace: "pre-wrap",
+            wordBreak: "break-word",
           }}
         >
           {result}
